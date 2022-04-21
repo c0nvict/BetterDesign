@@ -21,6 +21,12 @@ values = {
 
 print(bd.table(values))
 ```
+```
+╔══════════════════════════════════════════════╦══════════════════════════════════════════════╗
+║ GitHub                                       ║ https://github.com/c0nvict                   ║
+║ PyPi                                         ║ https://pypi.org/project/BetterDesign/1.0.0/ ║
+╚══════════════════════════════════════════════╩══════════════════════════════════════════════╝
+```
 ## Updates and new features
 If I ever update this, it will be uncommon since I only made this when I was bored. I do plan to eventually add some stuff with colors, feel free to submit a pull request if you add anything!
 ## Credits
