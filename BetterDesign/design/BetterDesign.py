@@ -5,6 +5,18 @@ import os
 
 os.system("")
 
+colors = {
+    "BLACK": "\u001b[30m",
+    "RED": "\u001b[31m",
+    "GREEN": "\u001b[32m",
+    "YELLOW": "\u001b[33m",
+    "BLUE": "\u001b[34m",
+    "MAGENTA": "\u001b[35m",
+    "CYAN": "\u001b[36m",
+    "WHITE": "\u001b[37m",
+    "reset": "\u001b[0m"
+}
+
 def center(text: str) -> str:
     if len(text.splitlines()) >= 2:
         return centertypes.multiple_line_center(text)
@@ -14,11 +26,11 @@ def center(text: str) -> str:
 def table(values: dict, **kwargs) -> str:
     if "limit" in kwargs:
         if isinstance(kwargs["limit"], int):
-            return tablefunctions.limited_table(values, kwargs["limit"])
+            return tablefunctions.limited_table(values, **kwargs)
         else:
-            return tablefunctions.table(values)
+            return tablefunctions.table(values, **kwargs)
     else:
-        return tablefunctions.table(values)
+        return tablefunctions.table(values, **kwargs)
 
 def section(**kwargs) -> str:
     if "length" in kwargs:
@@ -57,7 +69,14 @@ class centertypes:
 class tablefunctions:
 
     @staticmethod
-    def limited_table(values: dict, limit) -> str:
+    def limited_table(values: dict, limit, **kwargs) -> str:
+        reset = colors["reset"]
+        value_color = ""
+        key_color = ""
+        if "value_color" in kwargs:
+            value_color = colors[kwargs["value_color"].upper()]
+        if "key_color" in kwargs:
+            key_color = colors[kwargs["key_color"].upper()]
         mrgl = limit + 2
         mrg = "═" * mrgl
         table = f"╔{mrg}╦{mrg}╗\n"
@@ -72,14 +91,27 @@ class tablefunctions:
             else:
                 left = (limit - len(key))
                 fixed_key = key + " " * left
-            table += f"║ {fixed_key} ║ {fixed_value} ║\n"
+            table += f"║ {key_color}{fixed_key}{reset} ║ {value_color}{fixed_value}{reset} ║\n"
         table += f"╚{mrg}╩{mrg}╝"
+        if "border_color" in kwargs:
+            color = colors[kwargs["border_color"].upper()]
+            for char in table:
+                if char in ("╚","╩","╝","║","═","╗","╦","╔"):
+                    table = table.replace(char, f"{reset}{color}{char}{reset}")
+
         return table
 
     @staticmethod
-    def table(values: dict):
-        largest_key = max(len(d) for d in values)
-        largest_value = max(len(d) for x,d in values.items())
+    def table(values: dict, **kwargs):
+        reset = colors["reset"]
+        value_color = ""
+        key_color = ""
+        if "value_color" in kwargs:
+            value_color = colors[kwargs["value_color"].upper()]
+        if "key_color" in kwargs:
+            key_color = colors[kwargs["key_color"].upper()]
+        largest_key = max(len(str(d)) for d in values)
+        largest_value = max(len(str(d)) for x,d in values.items())
         max_ = largest_value if largest_value > largest_key else largest_key
         brdl = max_ + 2
         mrg = "═" * brdl
@@ -95,8 +127,14 @@ class tablefunctions:
             else:
                 left = (max_ - len(key))
                 fixed_key = key + " " * left
-            table += f"║ {fixed_key} ║ {fixed_value} ║\n"
+            table += f"║ {key_color}{fixed_key}{reset} ║ {value_color}{fixed_value}{reset} ║\n"
         table += f"╚{mrg}╩{mrg}╝"
+        if "border_color" in kwargs:
+            color = colors[kwargs["border_color"].upper()]
+            for char in table:
+                if char in ("╚","╩","╝","║","═","╗","╦","╔"):
+                    table = table.replace(char, f"{reset}{color}{char}{reset}")
+
         return table
 
 class design_methods:
