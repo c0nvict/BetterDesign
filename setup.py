@@ -5,11 +5,11 @@ here = pathlib.Path(__file__).parent.resolve()
 
 setup(
     name="BetterDesign",
-    version="1.0.0",
+    version="2.0.0",
     description="Used to make your design of terminal apps easier!",
     long_description=(here / "README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
-    author="c0nvict",
+    author="convict",
     license="MIT",
     packages=find_packages(),
     install_requires=None,
