@@ -55,3 +55,5 @@ There is some other stuff that I have not shown examples for yet, just feel free
 If I ever update this, it will be uncommon since I only made this when I was bored. I do plan to eventually add some stuff with colors, feel free to submit a pull request if you add anything!
 ## Credits
 This was solely developed by <a href="https://github.com/c0nvict">c0nvict</a>, this isn't supposed to be a huge project, just some things to make your application better
+## Known errors
+Centering BetterDesign tables is broken
